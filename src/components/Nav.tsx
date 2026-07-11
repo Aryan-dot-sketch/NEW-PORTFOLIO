@@ -3,9 +3,22 @@ import { useEffect, useRef, useState } from "react";
 import { navigation, profile } from "../data/portfolio";
 import { useActiveSection } from "../hooks/useActiveSection";
 import BrandMark from "./BrandMark";
-import DarkModeToggle from "./DarkModeToggle";
 
-export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
+interface NavProps {
+  onOpenCommand: () => void;
+  heroReady?: boolean;
+}
+
+const stagger = {
+  hidden: { opacity: 0, y: -10 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
+
+export default function Nav({ onOpenCommand, heroReady = true }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const reduce = useReducedMotion();
@@ -22,11 +35,16 @@ export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
   useEffect(() => {
     if (!menuOpen) return;
     document.documentElement.style.overflow = "hidden";
-    const focusTimer = window.setTimeout(() => menuRef.current?.querySelector<HTMLElement>("a")?.focus(), 40);
+    const focusTimer = window.setTimeout(
+      () => menuRef.current?.querySelector<HTMLElement>("a")?.focus(),
+      40
+    );
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
       if (event.key === "Tab" && menuRef.current) {
-        const focusable = Array.from(menuRef.current.querySelectorAll<HTMLElement>("a, button"));
+        const focusable = Array.from(
+          menuRef.current.querySelectorAll<HTMLElement>("a, button")
+        );
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
         if (event.shiftKey && document.activeElement === first) {
@@ -61,20 +79,46 @@ export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
         }`}
       >
         <div className="site-container flex h-[72px] items-center justify-between">
-          <a href="#top" aria-label="Aryan, home" className="text-ink">
-            <BrandMark />
-          </a>
+          {/* Logo — staggered 0 */}
+          <motion.div
+            custom={0}
+            variants={reduce ? undefined : stagger}
+            initial="hidden"
+            animate={heroReady ? "visible" : "hidden"}
+          >
+            <a href="#top" aria-label="Aryan, home" className="text-ink">
+              <BrandMark />
+            </a>
+          </motion.div>
 
-          <nav className="hidden items-center gap-7 xl:flex" aria-label="Primary navigation">
+          {/* Nav links — staggered 1 */}
+          <motion.nav
+            custom={1}
+            variants={reduce ? undefined : stagger}
+            initial="hidden"
+            animate={heroReady ? "visible" : "hidden"}
+            className="hidden items-center gap-7 xl:flex"
+            aria-label="Primary navigation"
+          >
             {navigation.map((item) => (
-              <a key={item.href} href={item.href} className="link-line mono text-[0.63rem] tracking-[0.14em] text-ink-soft transition-colors hover:text-ink">
+              <a
+                key={item.href}
+                href={item.href}
+                className="link-line mono text-[0.63rem] tracking-[0.14em] text-ink-soft transition-colors hover:text-ink"
+              >
                 {item.label.toUpperCase()}
               </a>
             ))}
-          </nav>
+          </motion.nav>
 
-          <div className="flex items-center gap-2">
-            <DarkModeToggle />
+          {/* CTA buttons — staggered 2 */}
+          <motion.div
+            custom={2}
+            variants={reduce ? undefined : stagger}
+            initial="hidden"
+            animate={heroReady ? "visible" : "hidden"}
+            className="flex items-center gap-2"
+          >
             <button
               type="button"
               onClick={onOpenCommand}
@@ -98,11 +142,15 @@ export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
               aria-expanded={menuOpen}
             >
               <span className="relative h-4 w-5">
-                <span className={`absolute left-0 top-1 h-px w-5 bg-ink transition-transform ${menuOpen ? "translate-y-[3px] rotate-45" : ""}`} />
-                <span className={`absolute bottom-1 left-0 h-px w-5 bg-ink transition-transform ${menuOpen ? "-translate-y-[3px] -rotate-45" : ""}`} />
+                <span
+                  className={`absolute left-0 top-1 h-px w-5 bg-ink transition-transform ${menuOpen ? "translate-y-[3px] rotate-45" : ""}`}
+                />
+                <span
+                  className={`absolute bottom-1 left-0 h-px w-5 bg-ink transition-transform ${menuOpen ? "-translate-y-[3px] -rotate-45" : ""}`}
+                />
               </span>
             </button>
-          </div>
+          </motion.div>
         </div>
       </header>
 
@@ -134,10 +182,22 @@ export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
               ))}
             </nav>
             <div className="mt-auto grid gap-3">
-              <button type="button" onClick={() => { setMenuOpen(false); onOpenCommand(); }} className="min-h-12 border border-line-strong mono text-[0.65rem] tracking-[0.14em] text-ink">
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onOpenCommand();
+                }}
+                className="min-h-12 border border-line-strong mono text-[0.65rem] tracking-[0.14em] text-ink"
+              >
                 OPEN COMMAND PALETTE
               </button>
-              <a href={profile.companyUrl} target="_blank" rel="noreferrer" className="flex min-h-12 items-center justify-center bg-ink mono text-[0.65rem] tracking-[0.14em] text-paper">
+              <a
+                href={profile.companyUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex min-h-12 items-center justify-center bg-ink mono text-[0.65rem] tracking-[0.14em] text-paper"
+              >
                 OPEN EXAMCODES.SITE ↗
               </a>
             </div>

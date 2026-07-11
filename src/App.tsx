@@ -5,6 +5,7 @@ import Architecture from "./components/Architecture";
 import Archive from "./components/Archive";
 import Arsenal from "./components/Arsenal";
 import BackToTop from "./components/BackToTop";
+import BirthdayCountdown from "./components/BirthdayCountdown";
 import Book from "./components/Book";
 import CaseStudy from "./components/CaseStudy";
 import ChapterRail from "./components/ChapterRail";
@@ -12,7 +13,6 @@ import CommandPalette from "./components/CommandPalette";
 import Contact from "./components/Contact";
 import Cursor from "./components/Cursor";
 import CursorTrail from "./components/CursorTrail";
-import DarkModeToggle from "./components/DarkModeToggle";
 import DecisionLog from "./components/DecisionLog";
 import Evolution from "./components/Evolution";
 import Footer from "./components/Footer";
@@ -23,7 +23,6 @@ import Nav from "./components/Nav";
 import Projects from "./components/Projects";
 import ScrollProgress from "./components/ScrollProgress";
 import SeamTransition from "./components/SeamTransition";
-import StatsTicker from "./components/StatsTicker";
 
 export default function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -128,12 +127,11 @@ export default function App() {
       </AnimatePresence>
       <CommandPalette open={commandOpen} onClose={closeCommand} />
       <ScrollProgress />
-      <DarkModeToggle />
       <Cursor />
       <CursorTrail />
 
       <div className="site-shell">
-        <Nav onOpenCommand={openCommand} />
+        <Nav onOpenCommand={openCommand} heroReady={heroReady} />
         <ChapterRail />
 
         {/*
@@ -144,7 +142,7 @@ export default function App() {
         */}
         <main id="main">
           <Hero start={heroReady} />
-          <StatsTicker />
+          <BirthdayCountdown />
           <Projects />
           <SeamTransition direction="toDark" />
           <CaseStudy />
