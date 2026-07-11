@@ -3,8 +3,8 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 
 /**
  * A subtle custom cursor for fine-pointer (desktop) devices.
- * - A small dot that grows into a ring when hovering interactive elements.
- * - Disabled on touch / coarse pointers and when reduced motion is preferred.
+ * Renders at z-9999 to always stay on top — even above overlays.
+ * Disabled on touch / coarse pointers and when reduced motion is preferred.
  */
 export default function Cursor() {
   const dotX = useMotionValue(-100);
@@ -55,27 +55,23 @@ export default function Cursor() {
 
   return (
     <>
-      {/* Dot */}
+      {/* Dot — always on top */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[100] hidden md:block"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block"
         style={{ x: dotX, y: dotY }}
         animate={{ opacity: visible ? 1 : 0, scale: down ? 0.6 : 1 }}
         transition={{ duration: 0.2 }}
       >
         <div
           className="rounded-full bg-accent"
-          style={{
-            width: 6,
-            height: 6,
-            transform: "translate(-50%, -50%)",
-          }}
+          style={{ width: 6, height: 6, transform: "translate(-50%, -50%)" }}
         />
       </motion.div>
       {/* Ring */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[100] hidden md:block"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block"
         style={{ x: ringX, y: ringY }}
         animate={{
           opacity: visible ? 1 : 0,
@@ -86,8 +82,8 @@ export default function Cursor() {
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
       >
         <div
-          className="rounded-full border border-accent/70"
-          style={{ transform: "translate(-50%, -50%)", width: "100%", height: "100%" }}
+          className="h-full w-full rounded-full border border-accent/70"
+          style={{ transform: "translate(-50%, -50%)" }}
         />
       </motion.div>
     </>

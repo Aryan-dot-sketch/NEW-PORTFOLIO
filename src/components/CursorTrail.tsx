@@ -2,28 +2,25 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const TRAIL_COUNT = 4;
-const BASE_DELAY = 0.04; // seconds between each trailing dot
+const BASE_DELAY = 0.04;
 
 /**
  * Ghost cursor trail — 4 fading rings follow the main cursor with
  * decreasing opacity and increasing delay. Only on fine-pointer devices.
+ * Renders at z-9998 to stay just below the main cursor dot.
  */
 export default function CursorTrail() {
   const rawX = useMotionValue(-100);
   const rawY = useMotionValue(-100);
   const [visible, setVisible] = useState(false);
 
-  // Create spring chains, each lagging further behind
-  const trails = Array.from({ length: TRAIL_COUNT }, (_, i) => {
-    const delay = BASE_DELAY * (i + 1);
-    return {
-      x: useSpring(rawX, { stiffness: 150 - i * 25, damping: 18 - i * 2, mass: 1 + i * 0.4 }),
-      y: useSpring(rawY, { stiffness: 150 - i * 25, damping: 18 - i * 2, mass: 1 + i * 0.4 }),
-      opacity: 0.55 - i * 0.12,
-      scale: 1 - i * 0.15,
-      size: 28 - i * 5,
-    };
-  });
+  const trails = Array.from({ length: TRAIL_COUNT }, (_, i) => ({
+    x: useSpring(rawX, { stiffness: 150 - i * 25, damping: 18 - i * 2, mass: 1 + i * 0.4 }),
+    y: useSpring(rawY, { stiffness: 150 - i * 25, damping: 18 - i * 2, mass: 1 + i * 0.4 }),
+    opacity: 0.55 - i * 0.12,
+    scale: 1 - i * 0.15,
+    size: 28 - i * 5,
+  }));
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -51,7 +48,7 @@ export default function CursorTrail() {
         <motion.div
           key={i}
           aria-hidden
-          className="pointer-events-none fixed left-0 top-0 z-[99] hidden rounded-full border border-accent/40"
+          className="pointer-events-none fixed left-0 top-0 z-[9998] hidden rounded-full border border-accent/40 md:block"
           style={{
             x: trail.x,
             y: trail.y,
