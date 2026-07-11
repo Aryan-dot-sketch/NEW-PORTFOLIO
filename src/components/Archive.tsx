@@ -26,7 +26,7 @@ export default function Archive() {
                   key={item.volume}
                   type="button"
                   onClick={() => setActiveIndex(index)}
-                  className={`grid min-h-24 w-full grid-cols-[5rem_1fr_auto] items-center gap-3 border-b border-line px-5 text-left transition-colors last:border-b-0 sm:px-7 ${index === activeIndex ? "bg-ink text-paper" : "text-ink hover:bg-paper-2"}`}
+                  className={`grid min-h-24 w-full grid-cols-[5rem_1fr_auto] items-center gap-3 border-b border-line px-5 text-left transition-all duration-200 last:border-b-0 sm:px-7 ${index === activeIndex ? "bg-ink text-paper" : "text-ink hover:bg-paper-3 hover:pl-6"}`}
                   aria-pressed={index === activeIndex}
                 >
                   <span className={`mono text-[0.6rem] tracking-[0.1em] ${index === activeIndex ? "text-paper/55" : "text-ink-faint"}`}>{item.volume}</span>

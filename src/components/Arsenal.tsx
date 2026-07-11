@@ -92,7 +92,7 @@ export default function Arsenal() {
                 {/* Tools list — quiet, comma-free, wide-spaced */}
                 <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label={`${row.category} tools`}>
                   {row.tools.map((tool) => (
-                    <li key={tool} className="text-base text-ink-soft transition-colors group-hover:text-ink sm:text-lg">
+                    <li key={tool} className="text-base text-ink-soft transition-all duration-200 group-hover:-translate-y-0.5 group-hover:text-ink sm:text-lg">
                       {tool}
                     </li>
                   ))}

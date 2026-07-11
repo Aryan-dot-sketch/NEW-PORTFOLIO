@@ -19,7 +19,7 @@ export default function CaseStudy() {
         <div className="mt-16 border-t border-line lg:mt-24">
           {caseStudy.map((item, index) => (
             <Reveal key={item.number} delay={index * 0.04}>
-              <article className="grid gap-5 border-b border-line py-8 sm:grid-cols-[4rem_0.8fr_1.2fr] sm:gap-8 sm:py-10 lg:grid-cols-[7rem_0.8fr_1.2fr]">
+              <article className="group grid gap-5 border-b border-line py-8 transition-all duration-300 hover:bg-paper-2/50 sm:grid-cols-[4rem_0.8fr_1.2fr] sm:gap-8 sm:py-10 sm:px-2 lg:grid-cols-[7rem_0.8fr_1.2fr]">
                 <span className="mono tabular-nums text-xs text-ink-faint">{item.number}</span>
                 <h3 className="font-display text-2xl font-medium tracking-[-0.035em] text-ink sm:text-3xl">{item.title}</h3>
                 <p className="max-w-prose text-sm leading-relaxed text-ink-soft sm:text-base">{item.copy}</p>

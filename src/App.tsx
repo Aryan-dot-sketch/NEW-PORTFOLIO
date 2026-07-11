@@ -18,28 +18,15 @@ import Hero from "./components/Hero";
 import Loader from "./components/Loader";
 import Nav from "./components/Nav";
 import Projects from "./components/Projects";
+import ScrollProgress from "./components/ScrollProgress";
 import SeamTransition from "./components/SeamTransition";
 
-function shouldShowLoader() {
-  if (typeof window === "undefined") return true;
-  try {
-    return sessionStorage.getItem("aryan-intro-seen") !== "1";
-  } catch {
-    return true;
-  }
-}
-
 export default function App() {
-  const [showLoader, setShowLoader] = useState(shouldShowLoader);
-  const [heroReady, setHeroReady] = useState(() => !shouldShowLoader());
+  const [showLoader, setShowLoader] = useState(true);
+  const [heroReady, setHeroReady] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
 
   const completeLoader = useCallback(() => {
-    try {
-      sessionStorage.setItem("aryan-intro-seen", "1");
-    } catch {
-      // Session storage is optional; the experience remains functional without it.
-    }
     setHeroReady(true);
     setShowLoader(false);
   }, []);
@@ -113,6 +100,7 @@ export default function App() {
 
       <AnimatePresence>{showLoader && <Loader onComplete={completeLoader} />}</AnimatePresence>
       <CommandPalette open={commandOpen} onClose={closeCommand} />
+      <ScrollProgress />
 
       <div className="site-shell">
         <Cursor />
