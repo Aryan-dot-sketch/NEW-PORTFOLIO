@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { projects } from "../data/portfolio";
 import { Reveal } from "./Reveal";
-import ProjectModal from "./ProjectModal";
+import ProjectBook from "./ProjectBook";
 import type { Project } from "../data/portfolio";
 
 export default function Projects() {
@@ -64,7 +64,7 @@ export default function Projects() {
 
           {/* Keyboard hint */}
           <p className="mt-6 text-right mono text-[0.58rem] tracking-[0.12em] text-ink-faint">
-            ← → KEYBOARD NAV / ENTER TO OPEN
+            ← → KEYBOARD NAV / ENTER TO OPEN BOOK
           </p>
 
           {/* Project grid */}
@@ -163,7 +163,7 @@ export default function Projects() {
                             : "text-[#d9e0e9]/50 group-hover:text-[#d9e0e9]"
                         }`}
                       >
-                        OPEN DETAILS →
+                        OPEN CHAPTER →
                       </span>
                     </div>
                   </article>
@@ -174,10 +174,13 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* Project detail modal */}
-      <ProjectModal
+      {/* Project book viewer */}
+      <ProjectBook
+        open={!!selectedProject}
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
+        allProjects={projects}
+        onNavigate={(p) => setSelectedProject(p)}
       />
     </>
   );
