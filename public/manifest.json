@@ -1,0 +1,21 @@
+{
+  "name": "Aryan — Founder, Builder, Owner",
+  "short_name": "Aryan",
+  "description": "A warm personal founder archive — voice AI, commerce systems, fiction, and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1ece2",
+  "theme_color": "#b5481e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "personal", "technology"],
+  "lang": "en",
+  "dir": "ltr"
+}

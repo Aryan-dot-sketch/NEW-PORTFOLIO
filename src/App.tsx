@@ -4,12 +4,15 @@ import Lenis from "lenis";
 import Architecture from "./components/Architecture";
 import Archive from "./components/Archive";
 import Arsenal from "./components/Arsenal";
+import BackToTop from "./components/BackToTop";
 import Book from "./components/Book";
 import CaseStudy from "./components/CaseStudy";
 import ChapterRail from "./components/ChapterRail";
 import CommandPalette from "./components/CommandPalette";
 import Contact from "./components/Contact";
 import Cursor from "./components/Cursor";
+import CursorTrail from "./components/CursorTrail";
+import DarkModeToggle from "./components/DarkModeToggle";
 import DecisionLog from "./components/DecisionLog";
 import Evolution from "./components/Evolution";
 import Footer from "./components/Footer";
@@ -20,6 +23,7 @@ import Nav from "./components/Nav";
 import Projects from "./components/Projects";
 import ScrollProgress from "./components/ScrollProgress";
 import SeamTransition from "./components/SeamTransition";
+import StatsTicker from "./components/StatsTicker";
 
 export default function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -41,12 +45,28 @@ export default function App() {
     };
   }, [commandOpen, showLoader]);
 
+  // Register service worker for PWA
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("SW registered"))
+        .catch(() => console.log("SW registration failed"));
+    }
+  }, []);
+
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement;
-      const typing = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
+      const typing =
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable;
 
-      if (((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") || (event.key === "/" && !typing)) {
+      if (
+        ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") ||
+        (event.key === "/" && !typing)
+      ) {
         event.preventDefault();
         setCommandOpen((current) => !current);
       }
@@ -74,7 +94,9 @@ export default function App() {
     frame = requestAnimationFrame(raf);
 
     const onAnchor = (event: MouseEvent) => {
-      const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+      const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>(
+        'a[href^="#"]'
+      );
       if (!anchor) return;
       const href = anchor.getAttribute("href");
       if (!href || href === "#") return;
@@ -94,16 +116,23 @@ export default function App() {
 
   return (
     <>
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[250] focus:bg-ink focus:px-4 focus:py-3 focus:mono focus:text-xs focus:text-paper">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[250] focus:bg-ink focus:px-4 focus:py-3 focus:mono focus:text-xs focus:text-paper"
+      >
         Skip to content
       </a>
 
-      <AnimatePresence>{showLoader && <Loader onComplete={completeLoader} />}</AnimatePresence>
+      <AnimatePresence>
+        {showLoader && <Loader onComplete={completeLoader} />}
+      </AnimatePresence>
       <CommandPalette open={commandOpen} onClose={closeCommand} />
       <ScrollProgress />
+      <DarkModeToggle />
+      <Cursor />
+      <CursorTrail />
 
       <div className="site-shell">
-        <Cursor />
         <Nav onOpenCommand={openCommand} />
         <ChapterRail />
 
@@ -115,6 +144,7 @@ export default function App() {
         */}
         <main id="main">
           <Hero start={heroReady} />
+          <StatsTicker />
           <Projects />
           <SeamTransition direction="toDark" />
           <CaseStudy />
@@ -131,6 +161,8 @@ export default function App() {
 
         <Footer onOpenCommand={openCommand} />
       </div>
+
+      <BackToTop />
     </>
   );
 }

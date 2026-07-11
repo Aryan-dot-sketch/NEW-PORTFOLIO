@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { navigation, profile } from "../data/portfolio";
 import { useActiveSection } from "../hooks/useActiveSection";
 import BrandMark from "./BrandMark";
+import DarkModeToggle from "./DarkModeToggle";
 
 export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
   const [scrolled, setScrolled] = useState(false);
@@ -73,6 +74,7 @@ export default function Nav({ onOpenCommand }: { onOpenCommand: () => void }) {
           </nav>
 
           <div className="flex items-center gap-2">
+            <DarkModeToggle />
             <button
               type="button"
               onClick={onOpenCommand}

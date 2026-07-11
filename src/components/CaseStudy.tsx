@@ -1,7 +1,8 @@
-import { caseStudy, profile } from "../data/portfolio";
+import { caseStudy, proof, profile } from "../data/portfolio";
 import { Quote } from "./Quote";
 import { Reveal } from "./Reveal";
 import Signature from "./Signature";
+import StatCounter from "./StatCounter";
 
 export default function CaseStudy() {
   return (
@@ -16,7 +17,20 @@ export default function CaseStudy() {
           </div>
         </Reveal>
 
-        <div className="mt-16 border-t border-line lg:mt-24">
+        {/* Stats — animated counters */}
+        <Reveal className="mt-14 grid gap-8 border border-line-strong bg-paper-2 p-8 lg:mt-16 lg:grid-cols-4 lg:p-12" variant="drift">
+          {proof.map((stat) => (
+            <div key={stat.label} className="text-center lg:text-left">
+              <StatCounter
+                value={parseInt(stat.value)}
+                label={stat.label}
+                detail={stat.detail}
+              />
+            </div>
+          ))}
+        </Reveal>
+
+        <div className="mt-14 border-t border-line lg:mt-20">
           {caseStudy.map((item, index) => (
             <Reveal key={item.number} delay={index * 0.04}>
               <article className="group grid gap-5 border-b border-line py-8 transition-all duration-300 hover:bg-paper-2/50 sm:grid-cols-[4rem_0.8fr_1.2fr] sm:gap-8 sm:py-10 sm:px-2 lg:grid-cols-[7rem_0.8fr_1.2fr]">
@@ -28,13 +42,7 @@ export default function CaseStudy() {
           ))}
         </div>
 
-        {/*
-          The meeting point: this is the one place on the page where
-          Aryan's warm, serif voice and ExamCodes' cold, mono voice sit
-          side by side in the same panel — a literal staging of the
-          relationship described in the copy. Each half re-declares its
-          own data-tone, overriding the section's ambient "cold" tone.
-        */}
+        {/* Meeting point panel */}
         <Reveal className="mt-16 lg:mt-24" variant="drift">
           <div className="grid overflow-hidden border border-line-strong lg:grid-cols-[1.25fr_0.75fr]">
             <div data-tone="warm" className="grain bg-paper p-6 text-ink sm:p-10 lg:p-14">

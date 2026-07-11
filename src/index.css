@@ -87,6 +87,47 @@
 }
 
 /* ============================================================
+   Force-theme overrides — applied by DarkModeToggle
+   ============================================================ */
+[data-force-theme="dark"] {
+  --color-paper: #050505;
+  --color-paper-2: #0a0b0d;
+  --color-paper-3: #101216;
+  --color-ink: #f2f4f7;
+  --color-ink-soft: #a1a8b4;
+  --color-ink-faint: #737b89;
+  --color-accent: #d9e0e9;
+  --color-accent-soft: #949eac;
+  --color-signal: #65e0ad;
+  --color-line-whisper: rgba(230, 235, 242, 0.05);
+  --color-line: rgba(230, 235, 242, 0.12);
+  --color-line-strong: rgba(230, 235, 242, 0.28);
+  --font-display: "Space Grotesk", Arial, sans-serif;
+  --tracking-display: -0.06em;
+  --weight-display: 520;
+  color-scheme: dark;
+}
+
+[data-force-theme="light"] {
+  --color-paper: #f1ece2;
+  --color-paper-2: #e7dfd0;
+  --color-paper-3: #dcd2bf;
+  --color-ink: #17130f;
+  --color-ink-soft: #5f574b;
+  --color-ink-faint: #756b5c;
+  --color-accent: #b5481e;
+  --color-accent-soft: #c76438;
+  --color-signal: #087f5b;
+  --color-line-whisper: rgba(23, 19, 15, 0.06);
+  --color-line: rgba(23, 19, 15, 0.12);
+  --color-line-strong: rgba(23, 19, 15, 0.28);
+  --font-display: "Fraunces", Georgia, serif;
+  --tracking-display: -0.025em;
+  --weight-display: 420;
+  color-scheme: light;
+}
+
+/* ============================================================
    Base
    ============================================================ */
 @layer base {

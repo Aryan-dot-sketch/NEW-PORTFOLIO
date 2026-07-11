@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
+import ReadingProgress from "./ReadingProgress";
 import { Reveal } from "./Reveal";
 
 const genres = ["Time fiction", "Time loop", "Murder", "Love", "Adventure", "Betrayal", "Paranormal"];
@@ -16,6 +17,7 @@ export default function Book() {
 
   return (
     <section id="book" data-tone="warm" className="grain section-pad relative overflow-hidden border-b border-line bg-paper text-ink">
+      <ReadingProgress />
       <div className="site-container">
         {/* Editorial header: the italic sits inside the same heading and
             carries the accent colour — echoes the "with care" moment in

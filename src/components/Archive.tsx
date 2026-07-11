@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { archive } from "../data/portfolio";
+import ReadingProgress from "./ReadingProgress";
 import { Reveal } from "./Reveal";
 
 export default function Archive() {
@@ -10,6 +11,7 @@ export default function Archive() {
 
   return (
     <section id="archive" data-tone="warm" className="grain section-pad border-b border-line bg-paper text-ink">
+      <ReadingProgress />
       <div className="site-container">
         <Reveal variant="clip">
           <div className="grid gap-7 border-t border-line pt-6 lg:grid-cols-[0.65fr_1.35fr] lg:items-end">
